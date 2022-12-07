@@ -10,7 +10,14 @@
     </head>
   <body>
       <h1>Weather App</h1>
-       <div id="map"></div>
+           <div id="map" class='map'></div>
+    <button class='button-80' onclick="theTemp()">Ok</button>
+    <div class='container'>
+        <div class='weatherBox'>
+           <div class='weather--temp'></div>
+           <div class='temp--symbol'></div>
+         </div>
+       </div>
      <script defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC75kqs_RD694ILnPBt0cOAsyzQwpSBfaU&callback=initMap"
     ></script>
