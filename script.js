@@ -1,17 +1,12 @@
 const displayTemp = document.querySelector('.weather--temp')
+const displayName = document.querySelector('.location--name')
+const displayCountry = document.querySelector('.country--name')
+const displayDescription = document.querySelector('.temp--description')
 
-    const locName = '';
-    const temp = '';
-    const theData = '';
 
-const theTemp = () => `${temp}+'°C'`;
 
 var myLat = '';
 var myLng = '';
-
-function displayVariables() {
-displayTemp.innerHTML = theTemp();
-}
   
 function initMap() {
 var myLatLng = {lat: 59.3293, lng: 18.0686}
@@ -53,12 +48,21 @@ const options = {
 fetch(`https://open-weather13.p.rapidapi.com/city/latlon/${myLat}/${myLng}`, options)
 	.then(response => response.json())
 	.then(data => {
+    const country = data.sys.country;
     const locName = data.name;
-    const temp = Math.round(data.main.temp - 273.15)
+    const temp = Math.round(data.main.temp - 273.15);
     const theData = data;
+    const description = data.weather[0].main;
+    const descIcon = data.weather[0].icon;
+    const dIcon = "https://openweathermap.org/img/w/" + descIcon + ".png"
     console.log(locName);
-    console.log(temp);
+    console.log(descIcon);
     console.log(theData);
     displayTemp.innerHTML = `${temp}°C`;
+    displayName.innerHTML = `${country}, `;
+    displayCountry.innerHTML = ` ${locName}`;
+    displayDescription.innerHTML = `${description}`;
+    document.getElementById("temp--icon").src = dIcon
   })
 }
+
