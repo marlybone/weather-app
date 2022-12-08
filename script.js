@@ -1,7 +1,7 @@
 const displayTemp = document.querySelector('.weather--temp')
 const displayName = document.querySelector('.location--name')
 const displayCountry = document.querySelector('.country--name')
-const displayDescription = document.querySelector('.temp--description')
+const displayDescription = document.querySelector('.icon--description')
 
 
 
@@ -59,8 +59,8 @@ fetch(`https://open-weather13.p.rapidapi.com/city/latlon/${myLat}/${myLng}`, opt
     console.log(descIcon);
     console.log(theData);
     displayTemp.innerHTML = `${temp}°C`;
-    displayName.innerHTML = `${country}, `;
-    displayCountry.innerHTML = ` ${locName}`;
+    displayName.innerHTML = `${country} `;
+    displayCountry.innerHTML = ` , ${locName}`;
     displayDescription.innerHTML = `${description}`;
     document.getElementById("temp--icon").src = dIcon
   })

@@ -11,8 +11,7 @@ html, body {
   height: 60%;
   width: 50%;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  margin-left: 25%;
 }
 
 .weatherBox {
@@ -21,9 +20,10 @@ html, body {
   background: white;
   margin: 60px;
   padding: 55px;
-  width: 250px;
-  height: 250px;
+  width: 350px;
+  height: 200px;
   border-radius: 25px;
+  background-color: chrome;
 }
 
 .container {
@@ -34,4 +34,25 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 25px;
+  margin-bottom: 10%;
+}
+
+.weather--temp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  margin-bottom: 10%;
+}
+
+.weather--description {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+}
+
+.icon--description {
+  margin-right: 5%;
 }
