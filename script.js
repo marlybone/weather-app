@@ -11,8 +11,8 @@ navigator.geolocation.getCurrentPosition(function(position) {
   myLng = position.coords.longitude;
   getWeather();
 }, function(error) {
-  myLat = 51.5072;
-  myLng = 0.1276;
+  myLat = 51.49618680636265;
+  myLng = -0.1460370605468686;
   getWeather();
 });
 
@@ -57,6 +57,7 @@ fetch(`https://open-weather13.p.rapidapi.com/city/latlon/${myLat}/${myLng}`, opt
     const description = data.weather[0].main;
     const descIcon = data.weather[0].icon;
     const dIcon = "https://openweathermap.org/img/w/" + descIcon + ".png"
+    console.log(myLat, myLng)
     displayTemp.innerHTML = `${temp}°C`;
     displayName.innerHTML = `${country} `;
     displayCountry.innerHTML = ` , ${locName}`;
