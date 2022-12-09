@@ -8,22 +8,21 @@ html, body {
 }
 
 #map {
-  height: 60%;
-  width: 50%;
+  height: 50%;
+  width: 80%;
   display: flex;
-  margin-left: 25%;
+  margin-left: 10%;
 }
 
 .weatherBox {
   border: 0.8px solid black;
   box-shadow: 0px 4px 16px rgba(17,17,26,0.1), 0px 8px 24px rgba(17,17,26,0.1), 0px 16px 56px rgba(17,17,26,0.1);
-  background: white;
+  background-color: #000000d0;
   margin: 60px;
   padding: 55px;
   width: 350px;
   height: 200px;
   border-radius: 25px;
-  background-color: chrome;
 }
 
 .container {
@@ -36,23 +35,25 @@ html, body {
   justify-content: center;
   font-size: 25px;
   margin-bottom: 10%;
+  color: white
 }
 
 .weather--temp {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 25px;
+  font-size: 40px;
   margin-bottom: 10%;
+  color: white
 }
 
 .weather--description {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 25px;
+  font-size: 20px;
+  color: white
 }
 
 .icon--description {
   margin-right: 5%;
+  color: white;
 }

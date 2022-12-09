@@ -3,26 +3,31 @@ const displayName = document.querySelector('.location--name')
 const displayCountry = document.querySelector('.country--name')
 const displayDescription = document.querySelector('.icon--description')
 
-
-
 var myLat = '';
 var myLng = '';
+
+navigator.geolocation.getCurrentPosition(function(position) {
+  myLat = position.coords.latitude;
+  myLng = position.coords.longitude;
+  getWeather();
+}, function(error) {
+  myLat = 51.5072;
+  myLng = 0.1276;
+  getWeather();
+});
+
   
 function initMap() {
-var myLatLng = {lat: 59.3293, lng: 18.0686}
+var myLatLng = {lat: myLat, lng: myLng}
 var mapOptions = {
   center: myLatLng,
   zoom: 8
-  
 };
     map = new google.maps.Map(document.getElementById('map'),
     mapOptions);
 
   var marker = new google.maps.Marker({
-  position: {
-    lat:59.3293,
-    lng:18.0686
-  },
+  position: myLatLng,
   map: map,
   draggable: true
 });
@@ -30,9 +35,7 @@ var mapOptions = {
 google.maps.event.addListener(marker, 'dragend', function(){
   myLat = marker.getPosition().lat();
   myLng = marker.getPosition().lng();
-  console.log(myLat + ' And ' + myLng)
   getWeather()
-
 });
 };
 
@@ -51,13 +54,9 @@ fetch(`https://open-weather13.p.rapidapi.com/city/latlon/${myLat}/${myLng}`, opt
     const country = data.sys.country;
     const locName = data.name;
     const temp = Math.round(data.main.temp - 273.15);
-    const theData = data;
     const description = data.weather[0].main;
     const descIcon = data.weather[0].icon;
     const dIcon = "https://openweathermap.org/img/w/" + descIcon + ".png"
-    console.log(locName);
-    console.log(descIcon);
-    console.log(theData);
     displayTemp.innerHTML = `${temp}°C`;
     displayName.innerHTML = `${country} `;
     displayCountry.innerHTML = ` , ${locName}`;
