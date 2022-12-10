@@ -58,9 +58,9 @@ fetch(`https://open-weather13.p.rapidapi.com/city/latlon/${myLat}/${myLng}`, opt
     const descIcon = data.weather[0].icon;
     const dIcon = "https://openweathermap.org/img/w/" + descIcon + ".png"
     console.log(myLat, myLng)
-    displayTemp.innerHTML = `${temp}°C`;
-    displayName.innerHTML = `${country} `;
-    displayCountry.innerHTML = ` , ${locName}`;
+    displayTemp.innerHTML = `${temp}°`;
+    displayName.innerHTML = `${country}, `;
+    displayCountry.innerHTML = `${locName}`;
     displayDescription.innerHTML = `${description}`;
     document.getElementById("temp--icon").src = dIcon
   })
