@@ -2,7 +2,8 @@ const displayTemp = document.querySelector('.weather--temp')
 const displayName = document.querySelector('.location--name')
 const displayCountry = document.querySelector('.country--name')
 const displayDescription = document.querySelector('.icon--description')
-
+/*Open Weather API KEY*/
+const API = 'e65d266285dc01c2ce570d54145b0c1c';
 var myLat = '';
 var myLng = '';
 
@@ -15,7 +16,6 @@ navigator.geolocation.getCurrentPosition(function(position) {
   myLng = -0.1460370605468686;
   getWeather();
 });
-
   
 function initMap() {
 var myLatLng = {lat: myLat, lng: myLng}
@@ -57,7 +57,7 @@ fetch(`https://open-weather13.p.rapidapi.com/city/latlon/${myLat}/${myLng}`, opt
     const description = data.weather[0].main;
     const descIcon = data.weather[0].icon;
     const dIcon = "https://openweathermap.org/img/w/" + descIcon + ".png"
-    console.log(myLat, myLng)
+    console.log(data)
     displayTemp.innerHTML = `${temp}°`;
     displayName.innerHTML = `${country}, `;
     displayCountry.innerHTML = `${locName}`;
@@ -66,3 +66,6 @@ fetch(`https://open-weather13.p.rapidapi.com/city/latlon/${myLat}/${myLng}`, opt
   })
 }
 
+fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${myLat}&lon=${myLng}&appid=${API}`)
+.then(response => response.json())
+.then()
