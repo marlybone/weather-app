@@ -13,22 +13,36 @@ html, body {
 }
 
 #map {
-  height: 50%;
+  height: 80%;
   width: 80%;
   display: flex;
   margin-left: 10%;
+}
+
+.bg-img{
+  background-image: url(Weather/clearNight.jpg);
 }
 
 .widget-container {
   width: 612px;
   height: 412px;
   display: block;
-  background-color: #313e45;
-  border-radius: 25px;
+  background-color: #D9AFD9;
+  background-image: linear-gradient(61deg, #D9AFD9 0%, #97D9E1 100%);
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   margin: 0 auto;
-  margin-top: 10%;
+  margin-top: 5%;
   margin-bottom: 5%;
+}
+
+.vertical-center-divider {
+  width: 3px;
+  position: absolute;
+  height: 300px;
+  background-color: white;
+  float: left;
+  transform: translate(233px, -302px);
+  z-index: 0
 }
 
 .top-left {
@@ -39,11 +53,13 @@ html, body {
 }
 
 .top-right {
-  height: 0%;
-  width: 15%;
+  height: 45.92%;
+  width: 19.77%;
   float: right;
-  padding: 70px 0 0 0;
-  margin-right: 13%;
+  position: absolute;
+  right: 0;
+  margin-right: 34%;
+  transform: translate(2px, -302px);
 }
 
 .bottom-left {

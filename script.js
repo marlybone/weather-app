@@ -13,6 +13,11 @@ let description;
 let descIcon;
 let dIcon;
 
+var background = document.querySelector('.top-right');
+background.classList.add('bg-img');
+
+
+
 navigator.geolocation.getCurrentPosition(function(position) {
   myLat = position.coords.latitude;
   myLng = position.coords.longitude;
@@ -45,36 +50,14 @@ google.maps.event.addListener(marker, 'dragend', function(){
 });
 };
 
-function getWeather() {
-const options = {
-	method: 'GET',
-	headers: {
-			'X-RapidAPI-Key': '3dcd448ec1msh2b4f01bc724171fp1ee5bdjsn24e082f33ce9',
-		  'X-RapidAPI-Host': 'open-weather13.p.rapidapi.com'
-	}
-};
-
-fetch(`https://open-weather13.p.rapidapi.com/city/latlon/${myLat}/${myLng}`, options)
-	.then(response => response.json())
-	.then(data => {
-    const country = data.sys.country;
-    const locName = data.name;
-    const temp = Math.round(data.main.temp - 273.15);
-    const description = data.weather[0].main;
-    const descIcon = data.weather[0].icon;
-    const dIcon = "https://openweathermap.org/img/w/" + descIcon + ".png"
-    console.log(data)
-    displayTemp.innerHTML = `${temp}°`;
-    displayName.innerHTML = `${country}, `;
-    displayCountry.innerHTML = `${locName}`;
-    displayDescription.innerHTML = `${description}`;
-    document.getElementById("temp--icon").src = dIcon
-  })
-}
-
+function getWeather(){
 fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${myLat}&lon=${myLng}&appid=${API}`)
 .then(response => response.json())
-.then(displayWeather)
+.then(data =>  {
+  console.log(data)
+  });   
+}
+
 
 function  displayWeather() {
   
