@@ -9,22 +9,43 @@
     <link rel="stylesheet" href="style.css">
     </head>
   <body>
-      <h1>Weather App</h1>
            <div id="map" class='map'></div>
-  <div id="weather_wrapper">
-  	<div class="weatherCard">
-  		<div class="currentTemp">
-  			<span class="temp"></span>
-  			<span class="location">s</span>
-  		</div>
-  		<div class="currentWeather">
-  			<span class="conditions">&#xf00d;</span>
-  			<div class="info">
-  				<span class="rain"></span>
-  				<span class="wind"></span>
-  			</div>
-  		</div>
-  	</div>
+  <div class="wrapper">
+  <div class="widget-container">
+    <div class="top-left">
+      <h1 class="city" id="city">city</h1>
+      <h2 id="day">Day</h2>
+      <h3 id="date">Month, Day Year</h3>
+      <h3 id="time">Time</h3>
+    </div>
+    <div class="top-right">
+      <h1 id="weather-status">Weather / Weather Status</h1>
+      <img class="weather-icon" src="https://myleschuahiock.files.wordpress.com/2016/02/sunny2.png">
+    </div>
+    <div class="horizontal-half-divider"></div>
+    <div class="bottom-left">
+      <h1 id="temperature">0</h1>
+      <h2 id="celsius">&degC</h2>
+      <h2 id="temp-divider">/</h2>
+      <h2 id="fahrenheit">&degF</h2>
+    </div>
+    <div class="vertical-half-divider"></div>
+    <div class="bottom-right">
+      <div class="other-details-key">
+        <p>Wind Speed</p>
+        <p>Humidity</p>
+        <p>Pressure</p>
+        <p>Sunrise Time</p>
+        <p>Sunset Time</p>
+      </div>
+      <div class="other-details-values">
+        <p class="windspeed">0 Km/h</p>
+        <p class="humidity">0 %</p>
+        <p class="pressure">0 hPa</p>
+        <p class="sunrise-time">0:00 am</p>
+        <p class="sunset-time">0:00 pm</p>
+      </div>
+    </div>
   </div>
      <script defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC75kqs_RD694ILnPBt0cOAsyzQwpSBfaU&callback=initMap"
