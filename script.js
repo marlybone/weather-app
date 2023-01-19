@@ -82,6 +82,6 @@ function  displayWeather() {
 
 function weatherBackground(weather) {
   switch(weather) {
-      
+    case 'Clear':
   }
 }
