@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "google-maps": "^4.3.3"
+    "google-maps": "^4.3.3",
+    "moment": "^2.29.4"
   }
 }
