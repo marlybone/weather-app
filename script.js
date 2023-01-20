@@ -3,6 +3,7 @@ const imgBackground = document.querySelector('.top-right');
 /*Open Weather API KEY*/
 const timestamp = Math.round(Date.now() / 1000);
 const API = 'e65d266285dc01c2ce570d54145b0c1c';
+const apiKey = 'AIzaSyC75kqs_RD694ILnPBt0cOAsyzQwpSBfaU';
 let myLat = '';
 let myLng = '';
 let city;
@@ -19,12 +20,11 @@ let wind;
 let currentTime;
 let timeZone;
 let isoCode;
-
-
+let day;
+let month;
+let year;
+let countryName;
 const background = document.querySelector('.top-right');
-
-
-
 
 navigator.geolocation.getCurrentPosition(function(position) {
   myLat = position.coords.latitude;
@@ -81,7 +81,7 @@ function  dataExtract(data) {
   sunriseTime = new Date(sunrise * 1000);
   sunsetTime = new Date(sunset * 1000);
   isoCode = data.sys.country;
-  displayData();
+  getTime();
 }
 
 function displayData() {
@@ -91,13 +91,26 @@ function displayData() {
   document.getElementById('humidity').innerText = humid + '%';
   document.getElementById('pressure').innerText = pressure + ' hPa';
   document.getElementById("weather-status").innerText = weatherType;
-  document.getElementById()
   
 }
 
 function getTime() {
-
+  const timeStamp = Date.now() / 1000;
+  let url = `https://maps.googleapis.com/maps/api/timezone/json?location=${myLat},${myLng}&timestamp=${timeStamp}&key=${apiKey}`;
+  fetch(url)
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);
+    let date = new Date((timeStamp + data.rawOffset + data.dstOffset) * 1000);
+    day = date.getDate();
+    month = date.getMonth() + 1;
+    year = date.getFullYear();
+    countryName = data.timeZoneId.match(/\/(.*)/)[1];
+    displayData();
+  })
+  .catch(error => console.log(error));
 }
+
 
 function weatherBackground(weather) {
   switch(weather) {
