@@ -23,7 +23,12 @@ let isoCode;
 let day;
 let month;
 let year;
-let countryName;
+let monthName;
+let timezoneName;
+let offset;
+let theTime;
+let stringTime;
+let exactTime;
 const background = document.querySelector('.top-right');
 
 navigator.geolocation.getCurrentPosition(function(position) {
@@ -91,21 +96,27 @@ function displayData() {
   document.getElementById('humidity').innerText = humid + '%';
   document.getElementById('pressure').innerText = pressure + ' hPa';
   document.getElementById("weather-status").innerText = weatherType;
-  
+  document.getElementById('day').innerText = day;
+  document.getElementById('date').innerText = monthName + ', ' + year;
 }
 
 function getTime() {
-  const timeStamp = Date.now() / 1000;
+  const timeStamp = Date.now()/1000;
   let url = `https://maps.googleapis.com/maps/api/timezone/json?location=${myLat},${myLng}&timestamp=${timeStamp}&key=${apiKey}`;
   fetch(url)
   .then(response => response.json())
   .then(data => {
-    console.log(data);
-    let date = new Date((timeStamp + data.rawOffset + data.dstOffset) * 1000);
-    day = date.getDate();
-    month = date.getMonth() + 1;
-    year = date.getFullYear();
-    countryName = data.timeZoneId.match(/\/(.*)/)[1];
+    timezoneName = data.timeZoneName;
+    theTime = new Date(timeStamp * 1000 + 0 * 1000);
+    stringTime = theTime.toString();
+    day = stringTime.match(/^\w{3}/)[0];
+    monthName = stringTime.match(/\s\w{3}\s\d{1,2}/)[0].trim();
+    year = stringTime.match(/\d{4}/)[0];
+    exactTime = stringTime.match(/\d{2}:\d{2}:\d{2}/)[0];
+        clockId = setInterval(function(){
+        theTime.setSeconds(theTime.getSeconds() + 1);
+        document.getElementById('time').innerHTML = theTime.toLocaleTimeString();
+    }, 1000);
     displayData();
   })
   .catch(error => console.log(error));
