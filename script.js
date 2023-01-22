@@ -1,7 +1,6 @@
 
 const imgBackground = document.querySelector('.top-right');
 /*Open Weather API KEY*/
-const timestamp = Math.round(Date.now() / 1000);
 const API = 'e65d266285dc01c2ce570d54145b0c1c';
 const apiKey = 'AIzaSyC75kqs_RD694ILnPBt0cOAsyzQwpSBfaU';
 let myLat = '';
@@ -9,10 +8,8 @@ let myLng = '';
 let city;
 let temp;
 let humid;
-let sunset;
-let sunrise;
-let sunsetTime;
-let sunriseTime;
+let sunUp;
+let sunDown;
 let pressure;
 let country;
 let weatherType;
@@ -30,6 +27,8 @@ let stringTime;
 let exactTime;
 let clockId
 let updateTime;
+let sunriseTime;
+let sunsetTime;
 const clock = document.getElementById('time');
 const background = document.querySelector('.top-right');
 
@@ -79,15 +78,22 @@ function  dataExtract(data) {
   city = data.name;
   pressure = data.main.pressure;
   humid = data.main.humidity;
-  sunset = data.sys.sunset;
-  sunrise = data.sys.sunrise;
+  let sunset = data.sys.sunset;
+  let sunrise = data.sys.sunrise;
   country = data.sys.country;
   weatherType = data.weather[0].main;
   wind = data.wind.speed;
   timeZone = data.timezone
   sunriseTime = new Date(sunrise * 1000);
   sunsetTime = new Date(sunset * 1000);
+  let stringSunset = sunsetTime.toString();
+  let stringSunrise = sunriseTime.toString();
+  sunUp = stringSunrise.match(/(\d{2}):(\d{2}):(\d{2})/)[0];
+  sunDown = stringSunset.match(/(\d{2}):(\d{2}):(\d{2})/)[0];
   isoCode = data.sys.country;
+  function isDark(sunriseTime, sunsetTime){
+    
+  }
   getTime(myLat, myLng);
 }
 
@@ -100,6 +106,8 @@ function displayData() {
   document.getElementById("weather-status").innerText = weatherType;
   document.getElementById('day').innerText = day;
   document.getElementById('date').innerText = monthName + ', ' + year;
+  document.getElementById('sunrise-time').innerText = sunUp;
+  document.getElementById('sunset-time').innerText = sunDown;
 }
 
 function getTime(lat, lng) {
@@ -125,7 +133,6 @@ function getTime(lat, lng) {
   })
   .catch(error => console.log(error));
 }
-
 
 function weatherBackground(weather) {
   switch(weather) {
