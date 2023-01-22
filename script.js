@@ -26,9 +26,11 @@ let year;
 let monthName;
 let timezoneName;
 let offset;
-let theTime;
 let stringTime;
 let exactTime;
+let clockId
+let updateTime;
+const clock = document.getElementById('time');
 const background = document.querySelector('.top-right');
 
 navigator.geolocation.getCurrentPosition(function(position) {
@@ -68,12 +70,12 @@ fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${myLat}&lon=${myLng}
 .then(response => response.json())
 .then(data => {
   dataExtract(data)
-  console.log(data);
+  console.log(data)
   });
 }
 
 function  dataExtract(data) {
-  temp = data.main.temp;
+  temp = data.main.temp.toFixed(1);
   city = data.name;
   pressure = data.main.pressure;
   humid = data.main.humidity;
@@ -86,7 +88,7 @@ function  dataExtract(data) {
   sunriseTime = new Date(sunrise * 1000);
   sunsetTime = new Date(sunset * 1000);
   isoCode = data.sys.country;
-  getTime();
+  getTime(myLat, myLng);
 }
 
 function displayData() {
@@ -100,22 +102,24 @@ function displayData() {
   document.getElementById('date').innerText = monthName + ', ' + year;
 }
 
-function getTime() {
+function getTime(lat, lng) {
+  clearInterval(clockId);
+  let theTime;
   const timeStamp = Date.now()/1000;
-  let url = `https://maps.googleapis.com/maps/api/timezone/json?location=${myLat},${myLng}&timestamp=${timeStamp}&key=${apiKey}`;
+  let url = `https://maps.googleapis.com/maps/api/timezone/json?location=${lat},${lng}&timestamp=${timeStamp}&key=${apiKey}`;
   fetch(url)
   .then(response => response.json())
   .then(data => {
     timezoneName = data.timeZoneName;
-    theTime = new Date(timeStamp * 1000 + 0 * 1000);
+    theTime = new Date((timeStamp + data.rawOffset + data.dstOffset - 3600) * 1000);
     stringTime = theTime.toString();
     day = stringTime.match(/^\w{3}/)[0];
-    monthName = stringTime.match(/\s\w{3}\s\d{1,2}/)[0].trim();
+    monthName = stringTime.match(/\s([A-Za-z]{3,9})\s\d{1,2}/)[0].trim();
     year = stringTime.match(/\d{4}/)[0];
     exactTime = stringTime.match(/\d{2}:\d{2}:\d{2}/)[0];
         clockId = setInterval(function(){
         theTime.setSeconds(theTime.getSeconds() + 1);
-        document.getElementById('time').innerHTML = theTime.toLocaleTimeString();
+        clock.innerHTML = theTime.toLocaleTimeString();
     }, 1000);
     displayData();
   })
