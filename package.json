@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "google-maps": "^4.3.3",
-    "moment": "^2.29.4"
+    "moment": "^2.29.4",
+    "suncalc": "^1.9.0"
   }
 }

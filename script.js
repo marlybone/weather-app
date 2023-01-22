@@ -29,85 +29,80 @@ let clockId
 let updateTime;
 let sunriseTime;
 let sunsetTime;
+let isLight;
 const clock = document.getElementById('time');
 const background = document.querySelector('.top-right');
 
-navigator.geolocation.getCurrentPosition(function(position) {
-  myLat = position.coords.latitude;
-  myLng = position.coords.longitude;
-  getWeather();
-}, function(error) {
-  myLat = 51.49618680636265;
-  myLng = -0.1460370605468686;
-  getWeather();
-});
-  
 function initMap() {
-var myLatLng = {lat: myLat, lng: myLng}
-var mapOptions = {
-  center: myLatLng,
-  zoom: 8
-};
-    map = new google.maps.Map(document.getElementById('map'),
-    mapOptions);
+    navigator.geolocation.getCurrentPosition(function(position) {
+        myLat = position.coords.latitude;
+        myLng = position.coords.longitude;
+        getWeather();
+        var myLatLng = {lat: myLat, lng: myLng};
+        var mapOptions = {
+            center: myLatLng,
+            zoom: 8
+        };
 
-  var marker = new google.maps.Marker({
-  position: myLatLng,
-  map: map,
-  draggable: true
-});
+        map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            draggable: true
+        });
 
-google.maps.event.addListener(marker, 'dragend', function(){
-  myLat = marker.getPosition().lat();
-  myLng = marker.getPosition().lng();
-  getWeather()
-});
+        google.maps.event.addListener(marker, 'dragend', function() {
+            myLat = marker.getPosition().lat();
+            myLng = marker.getPosition().lng();
+            getWeather();
+        });
+    }, function(error) {
+        myLat = 51.49618680636265;
+        myLng = -0.1460370605468686;
+        getWeather();
+    });
 };
 
 function getWeather(){
-fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${myLat}&lon=${myLng}&appid=${API}&units=metric`)
-.then(response => response.json())
-.then(data => {
-  dataExtract(data)
-  console.log(data)
-  });
+  fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${myLat}&lon=${myLng}&appid=${API}&units=metric`)
+  .then(response => response.json())
+  .then(data => {
+    dataExtract(data)
+    });
 }
 
 function  dataExtract(data) {
-  temp = data.main.temp.toFixed(1);
-  city = data.name;
-  pressure = data.main.pressure;
-  humid = data.main.humidity;
-  let sunset = data.sys.sunset;
-  let sunrise = data.sys.sunrise;
-  country = data.sys.country;
-  weatherType = data.weather[0].main;
-  wind = data.wind.speed;
-  timeZone = data.timezone
-  sunriseTime = new Date(sunrise * 1000);
-  sunsetTime = new Date(sunset * 1000);
-  let stringSunset = sunsetTime.toString();
-  let stringSunrise = sunriseTime.toString();
-  sunUp = stringSunrise.match(/(\d{2}):(\d{2}):(\d{2})/)[0];
-  sunDown = stringSunset.match(/(\d{2}):(\d{2}):(\d{2})/)[0];
-  isoCode = data.sys.country;
-  function isDark(sunriseTime, sunsetTime){
-    
-  }
-  getTime(myLat, myLng);
+    temp = data.main.temp.toFixed(1);
+    city = data.name;
+    pressure = data.main.pressure;
+    humid = data.main.humidity;
+    let sunset = data.sys.sunset;
+    let sunrise = data.sys.sunrise;
+    country = data.sys.country;
+    weatherType = data.weather[0].main;
+    wind = data.wind.speed;
+    timeZone = data.timezone
+    sunriseTime = new Date(sunrise * 1000);
+    sunsetTime = new Date(sunset * 1000);
+    let stringSunset = sunsetTime.toString();
+    let stringSunrise = sunriseTime.toString();
+    sunUp = stringSunrise.match(/(\d{2}):(\d{2})/)[0];
+    sunDown = stringSunset.match(/(\d{2}):(\d{2})/)[0];
+    isoCode = data.sys.country;
+    getTime(myLat, myLng);
 }
 
 function displayData() {
-  document.getElementById('temperature').innerText = temp;
-  document.getElementById('city').innerText = city;
-  document.getElementById('windspeed').innerText = wind + 'Km/h';
-  document.getElementById('humidity').innerText = humid + '%';
-  document.getElementById('pressure').innerText = pressure + ' hPa';
-  document.getElementById("weather-status").innerText = weatherType;
-  document.getElementById('day').innerText = day;
-  document.getElementById('date').innerText = monthName + ', ' + year;
-  document.getElementById('sunrise-time').innerText = sunUp;
-  document.getElementById('sunset-time').innerText = sunDown;
+    document.getElementById('temperature').innerText = temp;
+    document.getElementById('city').innerText = city;
+    document.getElementById('windspeed').innerText = wind + 'Km/h';
+    document.getElementById('humidity').innerText = humid + '%';
+    document.getElementById('pressure').innerText = pressure + ' hPa';
+    document.getElementById("weather-status").innerText = weatherType;
+    document.getElementById('day').innerText = day;
+    document.getElementById('date').innerText = monthName + ', ' + year;
+    document.getElementById('sunrise-time').innerText = sunUp;
+    document.getElementById('sunset-time').innerText = sunDown;
 }
 
 function getTime(lat, lng) {
@@ -124,17 +119,29 @@ function getTime(lat, lng) {
     day = stringTime.match(/^\w{3}/)[0];
     monthName = stringTime.match(/\s([A-Za-z]{3,9})\s\d{1,2}/)[0].trim();
     year = stringTime.match(/\d{4}/)[0];
-    exactTime = stringTime.match(/\d{2}:\d{2}:\d{2}/)[0];
+    exactTime = stringTime.match(/(\d{2}):(\d{2})/)[0];
         clockId = setInterval(function(){
         theTime.setSeconds(theTime.getSeconds() + 1);
         clock.innerHTML = theTime.toLocaleTimeString();
     }, 1000);
     displayData();
+    isDark(myLat, myLng)
   })
   .catch(error => console.log(error));
 }
 
-function weatherBackground(weather) {
+function isDark(lat, lng) {
+    let date = new Date();
+    let times = SunCalc.getTimes(date, lat, lng);
+    if(date < times.sunrise || date > times.sunset) {
+      isLight = false;
+    } else {
+      isLight = true;
+    }
+  weatherBackground(isLight)
+}
+
+function weatherBackground(isLight) {
   switch(weather) {
     case 'Clear':
       imgBackground.style.setProperty('background-image', 'url("Weather/image.jpg")');
