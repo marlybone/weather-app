@@ -70,6 +70,7 @@ function getWeather(){
   .then(response => response.json())
   .then(data => {
     dataExtract(data)
+    console.log(data)
     });
 }
 
@@ -140,4 +141,55 @@ function isDark(lat, lng) {
     } else {
       isLight = true;
     }
+  weatherBackground(isLight, weatherType)
+}
+
+function weatherBackground(isLight, Weather) {
+let img = document.getElementById('img-weather')
+  switch(isLight) {
+    case true:
+      switch(Weather) {
+          case 'Clear':
+            img.src = "Weather/clearSun.jpg";
+            break;
+          case 'Rain':
+            img.src = "Weather/rainDay.jpg";
+            break;
+          case 'Clouds': 
+            img.src = "Weather/cloudsDay.jpg";
+            break;
+          case 'Snow':
+            img.src = 'Weather/snowDay.jpg';
+            break;
+          case 'Thunderstorm': 
+            img.src = 'Weather/thunderDay.jpg';
+            break;
+          case 'Mist': 
+            img.src = 'Weather/mistyDay.jpg'; 
+            break;
+      }
+      break;
+    case false:
+      switch(Weather) {
+          case 'Clear':
+            img.src = "Weather/clearNight.jpg";
+            break;
+          case 'Rain':
+            img.src = "Weather/rainNight.jpg";
+            break;
+          case 'Clouds': 
+            img.src = 'Weather/cloudsNight.jpg';
+            break;
+          case 'Snow':
+            img.src = 'Weather/snowNight.jpg';
+            break;
+          case 'Thunderstorm': 
+            img.src = 'Weather/thunderNight.jpg';
+            break;
+          case 'Mist': 
+            img.src = 'Weather/mistyNight.jpg'; 
+            break;
+    }
+      break;
+  } 
 }
