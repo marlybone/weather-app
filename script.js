@@ -31,6 +31,8 @@ let sunriseTime;
 let sunsetTime;
 let isLight;
 const clock = document.getElementById('time');
+let theTime;
+
 const background = document.querySelector('.top-right');
 
 function initMap() {
@@ -138,12 +140,4 @@ function isDark(lat, lng) {
     } else {
       isLight = true;
     }
-  weatherBackground(isLight)
-}
-
-function weatherBackground(isLight) {
-  switch(weather) {
-    case 'Clear':
-      imgBackground.style.setProperty('background-image', 'url("Weather/image.jpg")');
-  }
 }
