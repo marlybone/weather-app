@@ -101,7 +101,6 @@ function displayData() {
     document.getElementById('windspeed').innerText = wind + 'Km/h';
     document.getElementById('humidity').innerText = humid + '%';
     document.getElementById('pressure').innerText = pressure + ' hPa';
-    document.getElementById("weather-status").innerText = weatherType;
     document.getElementById('day').innerText = day;
     document.getElementById('date').innerText = monthName + ', ' + year;
     document.getElementById('sunrise-time').innerText = sunUp;

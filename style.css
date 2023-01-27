@@ -56,17 +56,18 @@ html, body {
 
 #top-right {
     height: 71.79%;
-    width: 60.2%;
+    width: 61.2%;
     float: right;
-    display: inline-block;
-    margin-right: 1%;
+    display: block;
+    position: relative;
 }
 
 #img-weather {
   z-index: 0;
   position: absolute;
-  height: 37.55%;
-  width: 13.1%
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
 }
 
 .bottom-left {
