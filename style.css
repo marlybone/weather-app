@@ -305,7 +305,6 @@ p {
 }
 
 .glass-box {
-  background-image: url('/Weather/cloudsky.jpg');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

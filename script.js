@@ -17,11 +17,13 @@ let isLight;
 let weatherIcon;
 const clock = document.getElementById("time");
 let weatherImgElement = document.getElementById('weather-img');
+const glassBox = document.getElementById("glass-box");
 let svgFile;
 let countryName = 'Sweden';
 let geocoder;
 let feelsLike;
-
+let imageUrl;
+let weatherIsLight;
 let weatherKey;
 let apiKey;
 
@@ -147,7 +149,6 @@ function getWeather() {
     .then((response) => response.json())
     .then((data) => {
       dataExtract(data);
-      console.log(data)
     });
 }
 
@@ -167,6 +168,7 @@ function dataExtract(data) {
   let sunrise = data.sys.sunrise;
   country = data.sys.country;
   weatherType = data.weather[0].description;
+  weatherIsLight = data.weather[0].main;
   wind = data.wind.speed;
   timeZone = data.timezone;
   sunUp = convertSunriseTo24Hour(sunrise);
@@ -220,7 +222,6 @@ async function getTime(myLat, myLng) {
 
 function isDark(time) {
   shortTime = time.substring(0, 2);
-  console.log(shortTime, sunUp, sunDown);
   if (
     shortTime < sunUp.substring(0, 2) ||
     shortTime > sunDown.substring(0, 2)
@@ -229,55 +230,91 @@ function isDark(time) {
   } else {
     isLight = true;
   }
-  weatherBackground(isLight, weatherType);
+  weatherBackground(isLight, weatherIsLight);
 }
 
 function weatherBackground(isLight, Weather) {
-  let img = document.getElementById("img-weather");
+  console.log(imageUrl, isLight, weatherIsLight, glassBox)
   switch (isLight) {
     case true:
       switch (Weather) {
         case "Clear":
-          img.src = "Weather/clearSun.jpg";
+          imageUrl = "Weather/clearSun.jpg";
           break;
         case "Rain":
-          img.src = "Weather/rainDay.jpg";
+          imageUrl = "Weather/rainDay.jpg";
           break;
         case "Clouds":
-          img.src = "Weather/cloudsDay.jpg";
+          imageUrl = "Weather/cloudsDay.jpg";
           break;
         case "Snow":
-          img.src = "Weather/snowDay.jpg";
+          imageUrl = "Weather/snowDay.jpg";
           break;
         case "Thunderstorm":
-          img.src = "Weather/thunderDay.jpg";
+          imageUrl = "Weather/thunderDay.jpg";
           break;
         case "Mist":
-          img.src = "Weather/mistyDay.jpg";
+          imageUrl = "Weather/mistyDay.jpg";
           break;
       }
       break;
     case false:
       switch (Weather) {
         case "Clear":
-          img.src = "Weather/clearNight.jpg";
+          imageUrl = "Weather/clearNight.jpg";
           break;
         case "Rain":
-          img.src = "Weather/rainNight.jpg";
+          imageUrl = "Weather/rainNight.jpg";
           break;
         case "Clouds":
-          img.src = "Weather/cloudsNight.jpg";
+          imageUrl = "Weather/cloudsNight.jpg";
           break;
         case "Snow":
-          img.src = "Weather/snowNight.jpg";
+          imageUrl = "Weather/snowNight.jpg";
           break;
         case "Thunderstorm":
-          img.src = "Weather/thunderNight.jpg";
+          imageUrl = "Weather/thunderNight.jpg";
           break;
         case "Mist":
-          img.src = "Weather/mistyNight.jpg";
+          imageUrl = "Weather/mistyNight.jpg";
           break;
       }
       break;
   }
+  glassBox.style.backgroundImage = `url('${imageUrl}')`;
 }
+// function weatherBackground(isLight, Weather) {
+//   const glassBox = document.querySelector(".glass-box");
+//   const imageUrls = {
+//     Clear: {
+//       day: "Weather/clearSun.jpg",
+//       night: "Weather/clearNight.jpg",
+//     },
+//     Rain: {
+//       day: "Weather/rainDay.jpg",
+//       night: "Weather/rainNight.jpg",
+//     },
+//     Clouds: {
+//       day: "Weather/cloudsDay.jpg",
+//       night: "Weather/cloudsNight.jpg",
+//     },
+//     Snow: {
+//       day: "Weather/snowDay.jpg",
+//       night: "Weather/snowNight.jpg",
+//     },
+//     Thunderstorm: {
+//       day: "Weather/thunderDay.jpg",
+//       night: "Weather/thunderNight.jpg",
+//     },
+//     Mist: {
+//       day: "Weather/mistyDay.jpg",
+//       night: "Weather/mistyNight.jpg",
+//     },
+//   };
+
+
+//   let imageUrl = isLight ? imageUrls[Weather].day : imageUrls[Weather].night;
+
+//   glassBox.style.backgroundImage = `url('${imageUrl}')`;
+// }
+
