@@ -29,7 +29,7 @@
   padding: 0;
   display: flex;
   justify-content: space-between;
-  flex-direction: column
+  flex-direction: row;
 }
 
 .svg-items {
@@ -41,17 +41,29 @@
   flex-direction: column;
   display: flex;
   align-items: center;
+  font-size: 12px;
 }
 
 .weather-details-box {
-  background-color: rgba(200, 200, 200, 0.4);; 
-  border-radius: 10px; 
+  background-color: rgba(200, 200, 200, 0.2); 
+  border-radius: 5px; 
   padding: 5px;
-  height: 5.5em;
+  height: 4em;
   width: 5.5em;
-  margin: 5px;
-  backdrop-filter: blur(2px);
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+  margin: 4px;
+  backdrop-filter: blur(1px);
+  box-shadow: 0 2px 11px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s, transform 0.2s; 
+}
+
+.weather-details-box:hover {
+  background-color: rgba(230, 230, 230, 0.1); 
+  backdrop-filter: blur(4px);
+  transform: scale(1.1);
 }
 
 .last-section {
@@ -60,6 +72,8 @@
   margin-bottom: 5px;
   justify-content: space-evenly;
   align-items: center;
+  flex-direction: column;
+
 }
 
 .middle-section {
@@ -67,7 +81,7 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  margin-top: 2em;
+  margin-top: 1em;
 }
 
 body {
@@ -77,20 +91,16 @@ body {
   height: 100vh;
   margin: 0;
   background-color: #f0f0f0;
+  position: relative;
 }
 
 #map {
   height: 80%;
   width: 80%;
   display: flex;
-  margin-left: 10%;
+  position: relative;
 }
 
-.section {
-  padding: 50px;
-  position: relative;
-  margin: auto;
-}
 
 .widget-container {
   width: 612px;
@@ -301,7 +311,6 @@ p {
   border: 1px solid #dcdcdc;
   border-radius: 30px;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.4); 
-
   width: 370px; 
   height: 700px;
   filter: brightness(10%);
@@ -332,6 +341,7 @@ p {
 }
 
 .wrapper {
-  position: relative;
   color: white;
+  margin-top: 5em;
+  margin-bottom: 4em;
 }

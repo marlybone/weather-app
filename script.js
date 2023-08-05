@@ -128,7 +128,6 @@ function dataExtract(data) {
 //     localTime.getMonth() + 1
 //   }/${localTime.getFullYear()}`;
 
-//   // Format the time with leading zeros for hours and minutes
 //   let hours = localTime.getHours().toString().padStart(2, "0");
 //   let minutes = localTime.getMinutes().toString().padStart(2, "0");
 

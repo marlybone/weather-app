@@ -10,16 +10,16 @@ app.use(cors());
 
 await dotenv.config();
 
-// const apiKey = process.env.API_KEY;
-// const weatherKey = process.env.API;
+const apiKey = process.env.API_KEY;
+const weatherKey = process.env.API;
 
-// app.get('/get-maps-api-key', async (req, res) => {
-//     try {
-//     res.json({ apiKey, weatherKey });
-//     } catch (error) {
-//         console.error('error', error)
-//     }  
-//   });
+app.get('/get-maps-api-key', async (req, res) => {
+    try {
+    res.json({ apiKey, weatherKey });
+    } catch (error) {
+        console.error('error', error)
+    }  
+  });
 
 
   
