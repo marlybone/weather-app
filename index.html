@@ -1,65 +1,204 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Weather App</title>
-    <link rel="stylesheet" href="style.css">
-    </head>
+    <link rel="stylesheet" href="style.css" />
+  </head>
   <body>
-    <div id="map" class='map'></div>
+    <div id="map" class="map"></div>
     <div class="wrapper">
-           <div class="glass-box">
-            <div class="overlay"></div>
-            <div class="top-section">
-            <div class="date-container">
-              <h2 id="day">Tuesday</h2>
-              <h3 id="date">12/12/2023</h3>
-              </div>
-            <h3 id="time">23:00</h3>
-            <h1 class="city" id="city">Stockholm, SE</h1>
+      <div class="glass-box">
+        <div class="overlay"></div>
+        <div class="top-section">
+          <div class="date-container">
+            <h2 id="day">Tuesday</h2>
+            <h3 id="date">12/12/2023</h3>
           </div>
-          <div class="mid-section">
-            <div class="mid-overlay">
+          <h3 id="time">23:00</h3>
+          <h1 class="city" id="city">Stockholm, SE</h1>
+        </div>
+        <div class="mid-section">
+          <div class="mid-overlay">
             <h1 id="temperature">19</h1>
             <h2 id="celsius">&degC</h2>
             <div class="weather-desc" id="weather-desc">Cloudy</div>
-         </div>
-           </div>
-           <div class="middle-section">
-            <div class="weather-icon" id="weather-icon"><img height="120px" width="120px" src='./animated/cloudy-day-1.svg' id="weather-img" class="weather-img" alt="weather icon"></div>
           </div>
-          <div class="last-section">
-              <ul class="weather-details">
-              <div class="weather-details-box">
-              <li class="svg-items"><svg width="25" height="25" stroke-width="1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15.7639 7C16.3132 6.38625 17.1115 6 18 6C19.6569 6 21 7.34315 21 9C21 10.6569 19.6569 12 18 12H3M8.50926 4.66667C8.87548 4.2575 9.40767 4 10 4C11.1046 4 12 4.89543 12 6C12 7.10457 11.1046 8 10 8H3M11.5093 19.3333C11.8755 19.7425 12.4077 20 13 20C14.1046 20 15 19.1046 15 18C15 16.8954 14.1046 16 13 16H3" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>Wind<span>10</span></li></div>
-              <div class="weather-details-box"><li class="svg-items"><svg
-                viewBox="0 0 30 30"
-                fill="black"
-                height="25"
-                width="25"
-                stroke-width="1.5"
-              >
-                <path d="M7.56 17.19c0-.88.24-1.89.72-3.03s1.1-2.25 1.86-3.31c1.56-2.06 2.92-3.62 4.06-4.67l.75-.72c.25.26.53.5.83.72.41.42 1.04 1.11 1.88 2.09s1.57 1.85 2.17 2.65c.71 1.01 1.32 2.1 1.81 3.25s.74 2.16.74 3.03c0 1-.19 1.95-.58 2.86-.39.91-.91 1.7-1.57 2.36-.66.66-1.45 1.19-2.37 1.58-.92.39-1.89.59-2.91.59-1 0-1.95-.19-2.86-.57-.91-.38-1.7-.89-2.36-1.55-.66-.65-1.19-1.44-1.58-2.35s-.59-1.89-.59-2.93zm2.26-2.93c0 .83.17 1.49.52 1.99.35.49.88.74 1.59.74.72 0 1.25-.25 1.61-.74.35-.49.53-1.15.54-1.99-.01-.84-.19-1.5-.54-2-.35-.49-.89-.74-1.61-.74-.71 0-1.24.25-1.59.74-.35.5-.52 1.16-.52 2zm1.57 0v-.35c0-.08.01-.19.02-.33s.02-.25.05-.32.05-.16.09-.24c.04-.08.09-.15.15-.18.07-.04.14-.06.23-.06.14 0 .25.04.33.12s.14.21.17.38c.03.18.05.32.06.45s.01.3.01.52c0 .23 0 .4-.01.52s-.03.27-.06.45c-.03.17-.09.3-.17.38s-.19.12-.33.12c-.09 0-.16-.02-.23-.06a.335.335 0 01-.15-.18c-.04-.08-.07-.17-.09-.24-.02-.08-.04-.19-.05-.32-.01-.14-.02-.25-.02-.32v-.34zm.59 7.75h1.32l4.99-10.74h-1.35l-4.96 10.74zm4.3-2.99c.01.84.2 1.5.55 2 .35.49.89.74 1.6.74.72 0 1.25-.25 1.6-.74.35-.49.52-1.16.53-2-.01-.84-.18-1.5-.53-1.99-.35-.49-.88-.74-1.6-.74-.71 0-1.25.25-1.6.74-.36.49-.54 1.15-.55 1.99zm1.57 0c0-.23 0-.4.01-.52s.03-.27.06-.45.09-.3.17-.38.19-.12.33-.12c.09 0 .17.02.24.06.07.04.12.1.16.19.04.09.07.17.1.24s.04.18.05.32l.01.32v.69l-.01.32-.05.32-.1.24-.16.19-.24.06c-.14 0-.25-.04-.33-.12s-.14-.21-.17-.38c-.03-.18-.05-.33-.06-.45s-.01-.3-.01-.53z" />
-              </svg>Humidity<span>10</span></li></div>
-              <div class="weather-details-box"><li class="svg-items"><svg fill="#000000" width="25" height="25" stroke-width="1" viewBox="0 0 32 32" id="icon" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <defs> <style> .cls-1 { fill: none; } </style> </defs> <title>pressure</title> <path d="M17.5053,16l8.1591-7.2529A1,1,0,0,0,25,7H22V2H20V9h2.37L16,14.6621,9.63,9H12V2H10V7H7a1,1,0,0,0-.6646,1.7471L14.4945,16,6.3353,23.2529A1,1,0,0,0,7,25h3v5h2V23H9.63L16,17.3379,22.37,23H20v7h2V25h3a1,1,0,0,0,.6645-1.7471Z"></path> <rect id="_Transparent_Rectangle_" data-name="<Transparent Rectangle>" class="cls-1" width="32" height="32"></rect> </g></svg>Pressure<span>10</span></li></div>
-              </ul>
-              <ul class="weather-details">
-                <div class="weather-details-box"><li class="svg-items"><svg fill="#000000" width="25" height="25" stroke-width="1" viewBox="0 0 32 32" id="icon" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <defs> <style> .cls-1 { fill: none; } </style> </defs> <title>pressure</title> <path d="M17.5053,16l8.1591-7.2529A1,1,0,0,0,25,7H22V2H20V9h2.37L16,14.6621,9.63,9H12V2H10V7H7a1,1,0,0,0-.6646,1.7471L14.4945,16,6.3353,23.2529A1,1,0,0,0,7,25h3v5h2V23H9.63L16,17.3379,22.37,23H20v7h2V25h3a1,1,0,0,0,.6645-1.7471Z"></path> <rect id="_Transparent_Rectangle_" data-name="<Transparent Rectangle>" class="cls-1" width="32" height="32"></rect> </g></svg>Pressure<span>10</span></li></div>
-                  <div class="weather-details-box"><li class="svg-items"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="25" height="25" stroke-width="1">
-                <path d="M8 14a4 4 0 0 1 8 0zm10.707-5.707a1 1 0 0 0-1.414 0L16.586 9A1 1 0 1 0 18 10.414l.707-.707a1 1 0 0 0 0-1.414zM21 12h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2zM3 12a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2zm3-1.586A1 1 0 1 0 7.414 9l-.707-.707a1 1 0 0 0-1.414 1.414zM19 17a1 1 0 0 0-1-1H6a1 1 0 0 0 0 2h12a1 1 0 0 0 1-1zm-4 5a1 1 0 0 0 0-2H9a1 1 0 0 0 0 2zM12 8a1 1 0 0 0 1-1V5.414l.293.293a1 1 0 0 0 1.414-1.414l-2-2a1 1 0 0 0-1.414 0l-2 2a1 1 0 0 0 1.414 1.414L11 5.414V7a1 1 0 0 0 1 1z"/>
-              </svg>Sunrise<span>10</span></li></div>
-              <div class="weather-details-box"><li class="svg-items"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" stroke-width="1" ViewBox="0 0 24 24"><path d="M8 14a4 4 0 0 1 8 0zm8.586-5A1 1 0 1 0 18 10.414l.707-.707a1 1 0 0 0-1.414-1.414zM21 12h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2zM4 14a1 1 0 0 0 0-2H3a1 1 0 0 0 0 2zm1.293-5.707a1 1 0 0 0 0 1.414l.707.707A1 1 0 1 0 7.414 9l-.707-.707a1 1 0 0 0-1.414 0zM6 18h12a1 1 0 0 0 0-2H6a1 1 0 0 0 0 2zm10 3a1 1 0 0 0-1-1H9a1 1 0 0 0 0 2h6a1 1 0 0 0 1-1zM12 2a1 1 0 0 0-1 1v1.586l-.293-.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l2-2a1 1 0 1 0-1.414-1.414L13 4.586V3a1 1 0 0 0-1-1z"/></svg>Sunset<span>10</span></li></div>
-            </ul>
+        </div>
+        <div class="middle-section">
+          <div class="weather-icon" id="weather-icon">
+            <img
+              height="120px"
+              width="120px"
+              src="./animated/cloudy-day-1.svg"
+              id="weather-img"
+              class="weather-img"
+              alt="weather icon"
+            />
           </div>
-          </div>
-          <div>
-          </div>
+        </div>
+        <div class="last-section">
+          <ul class="weather-details">
+            <div class="weather-details-box">
+              <li class="svg-items">
+                <svg
+                  width="25"
+                  height="25"
+                  stroke-width="1"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <path
+                      d="M15.7639 7C16.3132 6.38625 17.1115 6 18 6C19.6569 6 21 7.34315 21 9C21 10.6569 19.6569 12 18 12H3M8.50926 4.66667C8.87548 4.2575 9.40767 4 10 4C11.1046 4 12 4.89543 12 6C12 7.10457 11.1046 8 10 8H3M11.5093 19.3333C11.8755 19.7425 12.4077 20 13 20C14.1046 20 15 19.1046 15 18C15 16.8954 14.1046 16 13 16H3"
+                      stroke="#000000"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                  </g></svg
+                >WIND<span id="wind">10</span>
+              </li>
+            </div>
+            <div class="weather-details-box">
+              <li class="svg-items">
+                <svg
+                  viewBox="0 0 30 30"
+                  fill="black"
+                  height="25"
+                  width="25"
+                  stroke-width="1.5"
+                >
+                  <path
+                    d="M7.56 17.19c0-.88.24-1.89.72-3.03s1.1-2.25 1.86-3.31c1.56-2.06 2.92-3.62 4.06-4.67l.75-.72c.25.26.53.5.83.72.41.42 1.04 1.11 1.88 2.09s1.57 1.85 2.17 2.65c.71 1.01 1.32 2.1 1.81 3.25s.74 2.16.74 3.03c0 1-.19 1.95-.58 2.86-.39.91-.91 1.7-1.57 2.36-.66.66-1.45 1.19-2.37 1.58-.92.39-1.89.59-2.91.59-1 0-1.95-.19-2.86-.57-.91-.38-1.7-.89-2.36-1.55-.66-.65-1.19-1.44-1.58-2.35s-.59-1.89-.59-2.93zm2.26-2.93c0 .83.17 1.49.52 1.99.35.49.88.74 1.59.74.72 0 1.25-.25 1.61-.74.35-.49.53-1.15.54-1.99-.01-.84-.19-1.5-.54-2-.35-.49-.89-.74-1.61-.74-.71 0-1.24.25-1.59.74-.35.5-.52 1.16-.52 2zm1.57 0v-.35c0-.08.01-.19.02-.33s.02-.25.05-.32.05-.16.09-.24c.04-.08.09-.15.15-.18.07-.04.14-.06.23-.06.14 0 .25.04.33.12s.14.21.17.38c.03.18.05.32.06.45s.01.3.01.52c0 .23 0 .4-.01.52s-.03.27-.06.45c-.03.17-.09.3-.17.38s-.19.12-.33.12c-.09 0-.16-.02-.23-.06a.335.335 0 01-.15-.18c-.04-.08-.07-.17-.09-.24-.02-.08-.04-.19-.05-.32-.01-.14-.02-.25-.02-.32v-.34zm.59 7.75h1.32l4.99-10.74h-1.35l-4.96 10.74zm4.3-2.99c.01.84.2 1.5.55 2 .35.49.89.74 1.6.74.72 0 1.25-.25 1.6-.74.35-.49.52-1.16.53-2-.01-.84-.18-1.5-.53-1.99-.35-.49-.88-.74-1.6-.74-.71 0-1.25.25-1.6.74-.36.49-.54 1.15-.55 1.99zm1.57 0c0-.23 0-.4.01-.52s.03-.27.06-.45.09-.3.17-.38.19-.12.33-.12c.09 0 .17.02.24.06.07.04.12.1.16.19.04.09.07.17.1.24s.04.18.05.32l.01.32v.69l-.01.32-.05.32-.1.24-.16.19-.24.06c-.14 0-.25-.04-.33-.12s-.14-.21-.17-.38c-.03-.18-.05-.33-.06-.45s-.01-.3-.01-.53z"
+                  /></svg
+                >HUMIDITY<span id="humidity-value">10</span>
+              </li>
+            </div>
+            <div class="weather-details-box">
+              <li class="svg-items">
+                <svg
+                  fill="#000000"
+                  width="25"
+                  height="25"
+                  stroke-width="1"
+                  viewBox="0 0 32 32"
+                  id="icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <defs>
+                      <style>
+                        .cls-1 {
+                          fill: none;
+                        }
+                      </style>
+                    </defs>
+                    <path
+                      d="M17.5053,16l8.1591-7.2529A1,1,0,0,0,25,7H22V2H20V9h2.37L16,14.6621,9.63,9H12V2H10V7H7a1,1,0,0,0-.6646,1.7471L14.4945,16,6.3353,23.2529A1,1,0,0,0,7,25h3v5h2V23H9.63L16,17.3379,22.37,23H20v7h2V25h3a1,1,0,0,0,.6645-1.7471Z"
+                    ></path>
+                    <rect
+                      id="_Transparent_Rectangle_"
+                      data-name="<Transparent Rectangle>"
+                      class="cls-1"
+                      width="32"
+                      height="32"
+                    ></rect>
+                  </g></svg
+                >PRESSURE<span id="pressure-value">10</span>
+              </li>
+            </div>
+          </ul>
+          <ul class="weather-details">
+            <div class="weather-details-box">
+              <li class="svg-items">
+                <svg
+                  fill="#000000"
+                  width="25"
+                  height="25"
+                  stroke-width="1"
+                  viewBox="0 0 32 32"
+                  id="icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                  <g
+                    id="SVGRepo_tracerCarrier"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></g>
+                  <g id="SVGRepo_iconCarrier">
+                    <defs></defs>
+                    </defs>
+                    <path
+                      d="M17.5053,16l8.1591-7.2529A1,1,0,0,0,25,7H22V2H20V9h2.37L16,14.6621,9.63,9H12V2H10V7H7a1,1,0,0,0-.6646,1.7471L14.4945,16,6.3353,23.2529A1,1,0,0,0,7,25h3v5h2V23H9.63L16,17.3379,22.37,23H20v7h2V25h3a1,1,0,0,0,.6645-1.7471Z"
+                    ></path>
+                    <rect
+                      id="_Transparent_Rectangle_"
+                      data-name="<Transparent Rectangle>"
+                      class="cls-1"
+                      width="32"
+                      height="32"
+                    ></rect>
+                  </g></svg
+                >FEELS<span id="feels-like">10</span>
+              </li>
+            </div>
+            <div class="weather-details-box">
+              <li class="svg-items">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width="25"
+                  height="25"
+                  stroke-width="1"
+                >
+                  <path
+                    d="M8 14a4 4 0 0 1 8 0zm10.707-5.707a1 1 0 0 0-1.414 0L16.586 9A1 1 0 1 0 18 10.414l.707-.707a1 1 0 0 0 0-1.414zM21 12h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2zM3 12a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2zm3-1.586A1 1 0 1 0 7.414 9l-.707-.707a1 1 0 0 0-1.414 1.414zM19 17a1 1 0 0 0-1-1H6a1 1 0 0 0 0 2h12a1 1 0 0 0 1-1zm-4 5a1 1 0 0 0 0-2H9a1 1 0 0 0 0 2zM12 8a1 1 0 0 0 1-1V5.414l.293.293a1 1 0 0 0 1.414-1.414l-2-2a1 1 0 0 0-1.414 0l-2 2a1 1 0 0 0 1.414 1.414L11 5.414V7a1 1 0 0 0 1 1z"
+                  /></svg
+                >SUNRISE<span id="sunrise">10</span>
+              </li>
+            </div>
+            <div class="weather-details-box">
+              <li class="svg-items">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="25"
+                  stroke-width="1"
+                  ViewBox="0 0 24 24"
+                >
+                  <path
+                    d="M8 14a4 4 0 0 1 8 0zm8.586-5A1 1 0 1 0 18 10.414l.707-.707a1 1 0 0 0-1.414-1.414zM21 12h-1a1 1 0 0 0 0 2h1a1 1 0 0 0 0-2zM4 14a1 1 0 0 0 0-2H3a1 1 0 0 0 0 2zm1.293-5.707a1 1 0 0 0 0 1.414l.707.707A1 1 0 1 0 7.414 9l-.707-.707a1 1 0 0 0-1.414 0zM6 18h12a1 1 0 0 0 0-2H6a1 1 0 0 0 0 2zm10 3a1 1 0 0 0-1-1H9a1 1 0 0 0 0 2h6a1 1 0 0 0 1-1zM12 2a1 1 0 0 0-1 1v1.586l-.293-.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l2-2a1 1 0 1 0-1.414-1.414L13 4.586V3a1 1 0 0 0-1-1z"
+                  /></svg
+                >SUNSET<span id="sunset">10</span>
+              </li>
+            </div>
+          </ul>
+        </div>
+      </div>
+      <div></div>
     </div>
-          
-<!-- <div class='section'>
+
+    <!-- <div class='section'>
   <div class="wrapper">
   <div class="widget-container">
     <div class="top-left">
@@ -97,6 +236,6 @@
   </div>
 </div>
 </div> -->
-<script src="script.js"></script> 
+    <script src="script.js"></script>
   </body>
 </html>
