@@ -214,6 +214,7 @@ async function getTime(myLat, myLng) {
   document.getElementById("sunrise").innerText = sunUp;
   document.getElementById("sunset").innerText = sunDown;
   document.getElementById('date').innerText = date;
+  document.getElementById('feels-like').innerText = feelsLike;
   isDark(formattedTime);
 }
 

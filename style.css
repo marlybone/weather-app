@@ -19,6 +19,11 @@
   align-items: center;
 }
 
+span {
+  font-size: 16px;
+  margin-top: 5px;
+}
+
 .weather-desc {
   display: flex;
   justify-content: center;
@@ -314,8 +319,10 @@ p {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.4); 
   width: 370px; 
   height: 700px;
-  filter: brightness(10%);
-  filter: saturate(70%)
+  filter: brightness(15%);
+  filter: saturate(65%);
+  margin-top: 50em;
+
 }
 
 .glass-box:before {
@@ -343,6 +350,4 @@ p {
 
 .wrapper {
   color: white;
-  margin-top: 5em;
-  margin-bottom: 4em;
 }
