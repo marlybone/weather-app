@@ -17,9 +17,34 @@ let isLight;
 let weatherIcon;
 const clock = document.getElementById("time");
 let weatherImgElement = document.getElementById('weather-img');
+let svgFile;
+let countryName = 'Sweden';
+let geocoder;
+let feelsLike;
 
 let weatherKey;
 let apiKey;
+
+const weatherMapping = {
+  '01d': 'day.svg',
+  '01n': 'night.svg',
+  '02d': 'cloudy-day-1.svg',
+  '02n': 'cloud-night-1.svg',
+  '03d': 'cloudy.svg',
+  '03n': 'cloudy.svg',
+  '04d': 'cloudy.svg',
+  '04n': 'cloudy.svg',
+  '09d': 'rainy-6.svg',
+  '09n': 'rainy-6.svg',
+  '10d': 'rainy-1.svg',
+  '10n': 'rainy-4.svg',
+  '11d': 'thunder.svg',
+  '11n': 'thunder.svg',
+  '13d': 'snowy-3.svg',
+  '13n': 'snowy-5.svg',
+  '50d': '50d',
+  '50n': '50d'
+}
 
 const background = document.querySelector(".top-right");
 
@@ -43,8 +68,38 @@ async function fetchGoogleMapsApiKey() {
 fetchGoogleMapsApiKey();
 
 function initMap() {
+  // Function to perform geocoding and get country name
+  function getCountryName(latlng) {
+    return new Promise((resolve, reject) => {
+      try {
+        const geocoder = new google.maps.Geocoder();
+        geocoder.geocode({ location: latlng }, function (results, status) {
+          if (status === google.maps.GeocoderStatus.OK) {
+            if (results && results.length > 0) {
+              const countryComponent = results[results.length - 1].address_components.find(
+                (component) => component.types.includes("country")
+              );
+              if (countryComponent) {
+                const name = countryComponent.long_name; 
+                console.log("Country:", name);
+                resolve(name); 
+              } else {
+                reject(new Error("Country name not found."));
+              }
+            } else {
+              reject(new Error("No geocoding results found."));
+            }
+          } else {
+            reject(new Error("Geocode was not successful for the following reason:", status));
+          }
+        });
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
   navigator.geolocation.getCurrentPosition(
-    function (position) {
+    async function (position) {
       myLat = position.coords.latitude;
       myLng = position.coords.longitude;
       getWeather();
@@ -60,31 +115,41 @@ function initMap() {
         map: map,
         draggable: true,
       });
+      try {
+        countryName = await getCountryName(myLatLng);
+      } catch (error) {
+        console.error("Error getting country name:", error);
+      }
 
-      google.maps.event.addListener(marker, "dragend", function () {
+      google.maps.event.addListener(marker, "dragend", async function () {
         myLat = marker.getPosition().lat();
         myLng = marker.getPosition().lng();
         getWeather();
+        try {
+          countryName = await getCountryName({ lat: myLat, lng: myLng });
+        } catch (error) {
+          console.error("Error getting country name:", error);
+        }
       });
     },
     function (error) {
       myLat = 51.49618680636265;
       myLng = -0.1460370605468686;
       getWeather();
-    },
+    }
   );
 }
 
-// function getWeather() {
-//   fetch(
-//     `https://api.openweathermap.org/data/2.5/weather?lat=${myLat}&lon=${myLng}&appid=${weatherKey}&units=metric`,
-//   )
-//     .then((response) => response.json())
-//     .then((data) => {
-//       dataExtract(data);
-//       console.log(data);
-//     });
-// }
+function getWeather() {
+  fetch(
+    `https://api.openweathermap.org/data/2.5/weather?lat=${myLat}&lon=${myLng}&appid=${weatherKey}&units=metric`,
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      dataExtract(data);
+      console.log(data)
+    });
+}
 
 function convertSunriseTo24Hour(timestamp) {
   let date = new Date(timestamp * 1000);
@@ -108,42 +173,49 @@ function dataExtract(data) {
   sunDown = convertSunriseTo24Hour(sunset);
   isoCode = data.sys.country;
   let weatherCode = data.weather[0].icon;
-  weatherIcon = "https://openweathermap.org/img/wn/" + weatherCode + '@2x' + ".png";
+  let svgPath = weatherMapping[weatherCode];
+  svgFile = `./animated/${svgPath}`
+  feelsLike = data.main.feels_like;
   getTime(myLat, myLng);
 }
 
-// async function getTime(myLat, myLng) {
-//   let currentTimestamp = Date.now();
-//   let timezoneApiUrl = `https://maps.googleapis.com/maps/api/timezone/json?location=${myLat},${myLng}&timestamp=${
-//     currentTimestamp / 1000
-//   }&key=${apiKey}`;
-//   let response = await fetch(timezoneApiUrl);
-//   let data = await response.json();
-//   let rawOffset = data.rawOffset;
-//   let dstOffset = data.dstOffset;
-//   let utcTime = currentTimestamp - dstOffset * 1000 + rawOffset * 1000;
-//   let localTime = new Date(utcTime);
+async function getTime(myLat, myLng) {
+  let currentTimestamp = Date.now();
+  let timezoneApiUrl = `https://maps.googleapis.com/maps/api/timezone/json?location=${myLat},${myLng}&timestamp=${
+    currentTimestamp / 1000
+  }&key=${apiKey}`;
+  let response = await fetch(timezoneApiUrl);
+  let data = await response.json();
+  let rawOffset = data.rawOffset;
+  let dstOffset = data.dstOffset;
+  let utcTime = currentTimestamp - dstOffset * 1000 + rawOffset * 1000;
+  let localTime = new Date(utcTime);
 
-//   let date = `${localTime.getDate()}/${
-//     localTime.getMonth() + 1
-//   }/${localTime.getFullYear()}`;
+  let date = `${localTime.getDate()}/${
+    localTime.getMonth() + 1
+  }/${localTime.getFullYear()}`;
 
-//   let hours = localTime.getHours().toString().padStart(2, "0");
-//   let minutes = localTime.getMinutes().toString().padStart(2, "0");
+  let hours = localTime.getHours().toString().padStart(2, "0");
+  let minutes = localTime.getMinutes().toString().padStart(2, "0");
+  let formattedTime = `${hours}:${minutes}`;
 
-//   let formattedTime = `${hours}:${minutes}`;
-//   weatherImgElement.setAttribute('src', weatherIcon);
-//   document.getElementById("weather-desc").innerText = weatherType;
-//   document.getElementById("day").innerText = formattedTime;
-//   document.getElementById("temperature").innerText = temp;
-//   document.getElementById("city").innerText = city;
-//   document.getElementById("windspeed").innerText = wind + " Km/h";
-//   document.getElementById("humidity").innerText = humid + "%";
-//   document.getElementById("pressure").innerText = pressure + " hPa";
-//   document.getElementById("sunrise-time").innerText = sunUp;
-//   document.getElementById("sunset-time").innerText = sunDown;
-//   isDark(formattedTime);
-// }
+  let options = { weekday: 'long' };
+  let dayName = localTime.toLocaleString('en-US', options);
+
+  weatherImgElement.setAttribute('src', svgFile);
+  document.getElementById('day').innerText = dayName
+  document.getElementById("weather-desc").innerText = weatherType;
+  document.getElementById("time").innerText = formattedTime;
+  document.getElementById("temperature").innerText = temp;
+  document.getElementById("city").innerText = city + ', ' + countryName;
+  document.getElementById("wind").innerText = wind + " Km/h";
+  document.getElementById("humidity-value").innerText = humid + "%";
+  document.getElementById("pressure-value").innerText = pressure + " hPa";
+  document.getElementById("sunrise").innerText = sunUp;
+  document.getElementById("sunset").innerText = sunDown;
+  document.getElementById('date').innerText = date;
+  isDark(formattedTime);
+}
 
 function isDark(time) {
   shortTime = time.substring(0, 2);
