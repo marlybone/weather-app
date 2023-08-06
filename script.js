@@ -15,6 +15,7 @@ let sunriseTime;
 let sunsetTime;
 let isLight;
 let weatherIcon;
+let formattedTime;
 const clock = document.getElementById("time");
 let weatherImgElement = document.getElementById('weather-img');
 const glassBox = document.getElementById("glass-box");
@@ -181,17 +182,33 @@ function dataExtract(data) {
   getTime(myLat, myLng);
 }
 
+async function getCorrectTime(timeZoneId) {
+  try {
+    let worldTimeAPIUrl = `http://worldtimeapi.org/api/timezone/${timeZoneId}`
+    let response = await fetch(worldTimeAPIUrl);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    let data = await response.json();
+    
+
+  } catch (error) {
+    console.error("Error fetching time:", error);
+    return null;
+  }
+}
+
 async function getTime(myLat, myLng) {
-  let currentTimestamp = Date.now();
-  let timezoneApiUrl = `https://maps.googleapis.com/maps/api/timezone/json?location=${myLat},${myLng}&timestamp=${
-    currentTimestamp / 1000
-  }&key=${apiKey}`;
+  let currentTimestamp = Date.now() ;
+  let timezoneApiUrl = `https://maps.googleapis.com/maps/api/timezone/json?location=${myLat},${myLng}&timestamp=${currentTimestamp / 1000}&key=${apiKey}`;
   let response = await fetch(timezoneApiUrl);
   let data = await response.json();
-  let rawOffset = data.rawOffset;
+  let timeZoneId = data.timeZoneId;
   let dstOffset = data.dstOffset;
+  let rawOffset = data.rawOffset;
   let utcTime = currentTimestamp - dstOffset * 1000 + rawOffset * 1000;
   let localTime = new Date(utcTime);
+  await getCorrectTime(timeZoneId);
 
   let date = `${localTime.getDate()}/${
     localTime.getMonth() + 1
