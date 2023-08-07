@@ -27,6 +27,8 @@ let imageUrl;
 let weatherIsLight;
 let weatherKey;
 let apiKey;
+let currentDate;
+let dayName;
 
 const weatherMapping = {
   '01d': 'day.svg',
@@ -150,14 +152,8 @@ function getWeather() {
     .then((response) => response.json())
     .then((data) => {
       dataExtract(data);
+      sunriseSunset(myLat, myLng);
     });
-}
-
-function convertSunriseTo24Hour(timestamp) {
-  let date = new Date(timestamp * 1000);
-  let hours = date.getHours().toString().padStart(2, "0");
-  let minutes = date.getMinutes().toString().padStart(2, "0");
-  return `${hours}:${minutes}`;
 }
 
 function dataExtract(data) {
@@ -172,8 +168,6 @@ function dataExtract(data) {
   weatherIsLight = data.weather[0].main;
   wind = data.wind.speed;
   timeZone = data.timezone;
-  sunUp = convertSunriseTo24Hour(sunrise);
-  sunDown = convertSunriseTo24Hour(sunset);
   isoCode = data.sys.country;
   let weatherCode = data.weather[0].icon;
   let svgPath = weatherMapping[weatherCode];
@@ -183,18 +177,52 @@ function dataExtract(data) {
 }
 
 async function getCorrectTime(timeZoneId) {
+  let daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   try {
-    let worldTimeAPIUrl = `http://worldtimeapi.org/api/timezone/${timeZoneId}`
+    let worldTimeAPIUrl = `http://worldtimeapi.org/api/timezone/${timeZoneId}`;
     let response = await fetch(worldTimeAPIUrl);
     if (!response.ok) {
       throw new Error("Network response was not ok");
     }
     let data = await response.json();
-    
-
+    let dateTime = data.datetime;
+    formattedTime = dateTime.substring(11,16);
+    currentDate = data.datetime.substring(0,10);
+    dayName = daysOfWeek[data.day_of_week];
+    return formattedTime, currentDate, dayName
   } catch (error) {
     console.error("Error fetching time:", error);
     return null;
+  }
+}
+
+function convertTimeTo24Hours(sunsetSunrise) {
+    let [timeDigits, period] = sunsetSunrise.split(' ')
+    let [timeHours, timeMinutes, timeSeconds] = timeDigits.split(':')
+    let hours = parseInt(timeHours)
+    let minutes = parseInt(timeMinutes)
+
+  if (period === 'PM' && hours !== 12)
+
+    console.log(hours, period)
+}
+
+async function sunriseSunset(myLat, myLng){
+  let sunriseSunsetApi = `https://api.sunrisesunset.io/json?lat=${myLat}&lng=${myLng}`
+  try{
+    let response = await fetch(sunriseSunsetApi);
+    if (!response.ok){
+      throw new Error('This response was not ok')
+    }
+    let data = await response.json();
+    sunUp = data.results.sunrise;
+    sunDown = data.results.sunset;
+
+    convertTimeTo24Hours(sunUp)
+    convertTimeTo24Hours(sunUp)
+    console.log(sunDown, sunUp)
+  } catch (error) {
+    console.error('error fetching', error)
   }
 }
 
@@ -204,41 +232,29 @@ async function getTime(myLat, myLng) {
   let response = await fetch(timezoneApiUrl);
   let data = await response.json();
   let timeZoneId = data.timeZoneId;
-  let dstOffset = data.dstOffset;
-  let rawOffset = data.rawOffset;
-  let utcTime = currentTimestamp - dstOffset * 1000 + rawOffset * 1000;
-  let localTime = new Date(utcTime);
+  console.log(timeZoneId)
   await getCorrectTime(timeZoneId);
-
-  let date = `${localTime.getDate()}/${
-    localTime.getMonth() + 1
-  }/${localTime.getFullYear()}`;
-
-  let hours = localTime.getHours().toString().padStart(2, "0");
-  let minutes = localTime.getMinutes().toString().padStart(2, "0");
-  let formattedTime = `${hours}:${minutes}`;
-
-  let options = { weekday: 'long' };
-  let dayName = localTime.toLocaleString('en-US', options);
-
-  weatherImgElement.setAttribute('src', svgFile);
-  document.getElementById('day').innerText = dayName
-  document.getElementById("weather-desc").innerText = weatherType;
-  document.getElementById("time").innerText = formattedTime;
-  document.getElementById("temperature").innerText = temp;
-  document.getElementById("city").innerText = city + ', ' + countryName;
-  document.getElementById("wind").innerText = wind + " Km/h";
-  document.getElementById("humidity-value").innerText = humid + "%";
-  document.getElementById("pressure-value").innerText = pressure + " hPa";
-  document.getElementById("sunrise").innerText = sunUp;
-  document.getElementById("sunset").innerText = sunDown;
-  document.getElementById('date').innerText = date;
-  document.getElementById('feels-like').innerText = feelsLike;
   isDark(formattedTime);
 }
 
-function isDark(time) {
-  shortTime = time.substring(0, 2);
+  function deliverDataToUi() {
+    weatherImgElement.setAttribute('src', svgFile);
+    document.getElementById('day').innerText = dayName
+    document.getElementById("weather-desc").innerText = weatherType;
+    document.getElementById("time").innerText = formattedTime;
+    document.getElementById("temperature").innerText = temp;
+    document.getElementById("city").innerText = city + ', ' + countryName;
+    document.getElementById("wind").innerText = wind + " Km/h";
+    document.getElementById("humidity-value").innerText = humid + "%";
+    document.getElementById("pressure-value").innerText = pressure + " hPa";
+    document.getElementById("sunrise").innerText = sunUp;
+    document.getElementById("sunset").innerText = sunDown;
+    document.getElementById('date').innerText = currentDate;
+    document.getElementById('feels-like').innerText = feelsLike;
+}
+
+function isDark(formattedTime) {
+  console.log(formattedTime, sunUp, sunDown)
   if (
     shortTime < sunUp.substring(0, 2) ||
     shortTime > sunDown.substring(0, 2)
