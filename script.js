@@ -34,7 +34,7 @@ const weatherMapping = {
   '01d': 'day.svg',
   '01n': 'night.svg',
   '02d': 'cloudy-day-1.svg',
-  '02n': 'cloud-night-1.svg',
+  '02n': 'cloudy-night-1.svg',
   '03d': 'cloudy.svg',
   '03n': 'cloudy.svg',
   '04d': 'cloudy.svg',
