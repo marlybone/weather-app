@@ -189,7 +189,6 @@ async function getCorrectTime(timeZoneId) {
     formattedTime = dateTime.substring(11,16);
     currentDate = data.datetime.substring(0,10);
     dayName = daysOfWeek[data.day_of_week];
-    return formattedTime, currentDate, dayName
   } catch (error) {
     console.error("Error fetching time:", error);
     return null;
@@ -202,9 +201,17 @@ function convertTimeTo24Hours(sunsetSunrise) {
     let hours = parseInt(timeHours)
     let minutes = parseInt(timeMinutes)
 
-  if (period === 'PM' && hours !== 12)
+  if (period === 'PM' && hours !== 12) {
+    hours+=12;
+  }
+  if (period === 'AM' && hours === 12){
+    hours = 0;
+  }
 
-    console.log(hours, period)
+  let formattedHours = hours.toString().padStart(2, '0');
+  let formattedMinutes = minutes.toString().padStart(2, '0');
+
+  return `${formattedHours}:${formattedMinutes}`;
 }
 
 async function sunriseSunset(myLat, myLng){
@@ -215,12 +222,10 @@ async function sunriseSunset(myLat, myLng){
       throw new Error('This response was not ok')
     }
     let data = await response.json();
-    sunUp = data.results.sunrise;
-    sunDown = data.results.sunset;
 
-    convertTimeTo24Hours(sunUp)
-    convertTimeTo24Hours(sunUp)
-    console.log(sunDown, sunUp)
+    sunUp = convertTimeTo24Hours(data.results.sunrise)
+    sunDown = convertTimeTo24Hours(data.results.sunset)
+
   } catch (error) {
     console.error('error fetching', error)
   }
@@ -254,16 +259,16 @@ async function getTime(myLat, myLng) {
 }
 
 function isDark(formattedTime) {
-  console.log(formattedTime, sunUp, sunDown)
   if (
-    shortTime < sunUp.substring(0, 2) ||
-    shortTime > sunDown.substring(0, 2)
+    formattedTime < sunUp ||
+    formattedTime > sunDown
   ) {
     isLight = false;
   } else {
     isLight = true;
   }
   weatherBackground(isLight, weatherIsLight);
+  deliverDataToUi()
 }
 
 function weatherBackground(isLight, Weather) {
