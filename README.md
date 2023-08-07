@@ -8,8 +8,9 @@ Sunrisesunset.io
 Google Maps API
 The information is then collated and displayed in an iPhone UI interface. Custom weather symbols are used, and a switch statement is used to select specific background images based on the weather and time of day.
 
-Check it out: https://googlemapsweatherapp.netlify.app
 ![WeatherApp](https://github.com/marlybone/weather-app/assets/41431476/ac3d6efb-9918-4164-ba93-0aee16933267)
+
+Check it out: https://googlemapsweatherapp.netlify.app
 
 Here are some of the features of the weather app:
 
