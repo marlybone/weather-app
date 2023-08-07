@@ -316,38 +316,3 @@ function weatherBackground(isLight, Weather) {
   }
   glassBox.style.backgroundImage = `url('${imageUrl}')`;
 }
-// function weatherBackground(isLight, Weather) {
-//   const glassBox = document.querySelector(".glass-box");
-//   const imageUrls = {
-//     Clear: {
-//       day: "Weather/clearSun.jpg",
-//       night: "Weather/clearNight.jpg",
-//     },
-//     Rain: {
-//       day: "Weather/rainDay.jpg",
-//       night: "Weather/rainNight.jpg",
-//     },
-//     Clouds: {
-//       day: "Weather/cloudsDay.jpg",
-//       night: "Weather/cloudsNight.jpg",
-//     },
-//     Snow: {
-//       day: "Weather/snowDay.jpg",
-//       night: "Weather/snowNight.jpg",
-//     },
-//     Thunderstorm: {
-//       day: "Weather/thunderDay.jpg",
-//       night: "Weather/thunderNight.jpg",
-//     },
-//     Mist: {
-//       day: "Weather/mistyDay.jpg",
-//       night: "Weather/mistyNight.jpg",
-//     },
-//   };
-
-
-//   let imageUrl = isLight ? imageUrls[Weather].day : imageUrls[Weather].night;
-
-//   glassBox.style.backgroundImage = `url('${imageUrl}')`;
-// }
-
