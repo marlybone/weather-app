@@ -20,7 +20,7 @@ const clock = document.getElementById("time");
 let weatherImgElement = document.getElementById('weather-img');
 const glassBox = document.getElementById("glass-box");
 let svgFile;
-let countryName = 'Sweden';
+let countryName;
 let geocoder;
 let feelsLike;
 let imageUrl;
@@ -81,13 +81,12 @@ function initMap() {
         geocoder.geocode({ location: latlng }, function (results, status) {
           if (status === google.maps.GeocoderStatus.OK) {
             if (results && results.length > 0) {
-              const countryComponent = results[results.length - 1].address_components.find(
+              let countryComponent = results[results.length - 1].address_components.find(
                 (component) => component.types.includes("country")
               );
               if (countryComponent) {
-                const name = countryComponent.long_name; 
-                console.log("Country:", name);
-                resolve(name); 
+                countryName = countryComponent.long_name; 
+                resolve(countryName); 
               } else {
                 reject(new Error("Country name not found."));
               }
@@ -161,8 +160,6 @@ function dataExtract(data) {
   city = data.name;
   pressure = data.main.pressure;
   humid = data.main.humidity;
-  let sunset = data.sys.sunset;
-  let sunrise = data.sys.sunrise;
   country = data.sys.country;
   weatherType = data.weather[0].description;
   weatherIsLight = data.weather[0].main;
@@ -237,7 +234,6 @@ async function getTime(myLat, myLng) {
   let response = await fetch(timezoneApiUrl);
   let data = await response.json();
   let timeZoneId = data.timeZoneId;
-  console.log(timeZoneId)
   await getCorrectTime(timeZoneId);
   isDark(formattedTime);
 }
@@ -272,7 +268,6 @@ function isDark(formattedTime) {
 }
 
 function weatherBackground(isLight, Weather) {
-  console.log(imageUrl, isLight, weatherIsLight, glassBox)
   switch (isLight) {
     case true:
       switch (Weather) {
