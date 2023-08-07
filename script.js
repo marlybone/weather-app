@@ -176,7 +176,7 @@ function dataExtract(data) {
 async function getCorrectTime(timeZoneId) {
   let daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   try {
-    let worldTimeAPIUrl = `http://worldtimeapi.org/api/timezone/${timeZoneId}`;
+    let worldTimeAPIUrl = `https://worldtimeapi.org/api/timezone/${timeZoneId}`;
     let response = await fetch(worldTimeAPIUrl);
     if (!response.ok) {
       throw new Error("Network response was not ok");
