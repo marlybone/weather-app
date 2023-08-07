@@ -151,7 +151,6 @@ function getWeather() {
     .then((response) => response.json())
     .then((data) => {
       dataExtract(data);
-      sunriseSunset(myLat, myLng);
     });
 }
 
@@ -171,6 +170,7 @@ function dataExtract(data) {
   svgFile = `./animated/${svgPath}`
   feelsLike = data.main.feels_like;
   getTime(myLat, myLng);
+  sunriseSunset(myLat, myLng);
 }
 
 async function getCorrectTime(timeZoneId) {
