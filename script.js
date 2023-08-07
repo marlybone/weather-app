@@ -194,7 +194,7 @@ async function getCorrectTime(timeZoneId) {
 
 function convertTimeTo24Hours(sunsetSunrise) {
     let [timeDigits, period] = sunsetSunrise.split(' ')
-    let [timeHours, timeMinutes, timeSeconds] = timeDigits.split(':')
+    let [timeHours, timeMinutes] = timeDigits.split(':')
     let hours = parseInt(timeHours)
     let minutes = parseInt(timeMinutes)
 
