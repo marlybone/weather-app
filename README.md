@@ -1,17 +1,20 @@
 # Weather App
 
-
-This was a unique take on a weather app. I used google maps API so you're able to point to anywhere on the map and get The temperature and a host of other data.
-
-I utilised 4 different API calls for the various information.
+This weather app uses the Google Maps API to let you point to anywhere on the map and get the temperature and a host of other data. It utilizes 4 different API calls to gather the information:
 
 OpenWeatherAPI
 WorldTimeApi
 Sunrisesunset.io
+Google Maps API
+The information is then collated and displayed in an iPhone UI interface. Custom weather symbols are used, and a switch statement is used to select specific background images based on the weather and time of day.
 
-And of course google maps API.
+Check it out: https://googlemapsweatherapp.netlify.app
+![WeatherApp](https://github.com/marlybone/weather-app/assets/41431476/ac3d6efb-9918-4164-ba93-0aee16933267)
 
-The information is collated and displayed an a iPhone UI interface. I have used custom weather symbols and I've also added a switch statement to use specific background images based on
-what the weather is and also if it's night or day. 
+Here are some of the features of the weather app:
 
-https://googlemapsweatherapp.netlify.app
+-Point to anywhere on the map to get the weather
+-See the temperature, humidity, wind speed, and more
+-Get the sunrise and sunset times
+-See custom weather symbols
+-Different backgrounds dependent on time of day
