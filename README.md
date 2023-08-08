@@ -14,8 +14,8 @@ Check it out: https://googlemapsweatherapp.netlify.app
 
 Here are some of the features of the weather app:
 
--Point to anywhere on the map to get the weather
--See the temperature, humidity, wind speed, and more
--Get the sunrise and sunset times
--See custom weather symbols
--Different backgrounds dependent on time of day
+*Point to anywhere on the map to get the weather
+*See the temperature, humidity, wind speed, and more
+*Get the sunrise and sunset times
+*See custom weather symbols
+*Different backgrounds dependent on time of day
