@@ -10,7 +10,7 @@ app.use(cors());
 const apiKey = process.env.API_KEY;
 const weatherKey = process.env.API;
 
-app.get('/get-maps-api-key', async (req, res) => {
+app.get('/grabapikey', async (req, res) => {
     try {
         res.json({ apiKey, weatherKey });
     } catch (error) {
