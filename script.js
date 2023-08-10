@@ -25,10 +25,11 @@ let geocoder;
 let feelsLike;
 let imageUrl;
 let weatherIsLight;
-let weatherKey;
 let apiKey;
+let weatherKey;
 let currentDate;
 let dayName;
+
 
 const weatherMapping = {
   '01d': 'day.svg',
@@ -55,11 +56,12 @@ const background = document.querySelector(".top-right");
 
 async function fetchGoogleMapsApiKey() {
   try {
-    const response = await fetch("/.netlify/functions/grabapikey/grabapikey");
+    const response = await fetch("/.netlify/api/api");
     const data = await response.json();
     apiKey = data.apiKey;
+    console.log(apiKey)
     weatherKey = data.weatherKey;
-    console.log(data)
+
 
     const googleMapsScript = document.createElement("script");
     googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMap`;

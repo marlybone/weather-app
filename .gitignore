@@ -10,4 +10,8 @@ node_modules/
 server.mjs
 netlifyhost.js
 # Local Netlify folder
+apikey.js
+googleapikey.js
+
+# Local Netlify folder
 .netlify
