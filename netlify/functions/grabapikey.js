@@ -4,23 +4,20 @@ import cors from 'cors';
 
 const app = express();
 
+const apiKey = process.env.API_KEY;
+const weatherKey = process.env.API;
 app.use(cors());
-exports.handler = async (event, context) => {
-    try {
-      const apiKey = process.env.API_KEY;
-      const weatherKey = process.env.API;
-  
-      return {
-        statusCode: 200,
-        body: JSON.stringify({ apiKey, weatherKey }),
-      };
-    } catch (error) {
-      return {
-        statusCode: 500,
-        body: JSON.stringify({ error: 'An error occurred' }),
-      };
-    }
-  };
+app.get('/grabapikey', async (req, res) => {
+  try {
+      res.json({ apiKey, weatherKey });
+      console.log(apiKey, weatherKey )
+  } catch (error) {
+      console.error('error', error);
+      res.status(500).json({ error: 'An error occurred' });
+  }
+});
+
+module.exports = app;
   
 
 export default app;
