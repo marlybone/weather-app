@@ -55,10 +55,11 @@ const background = document.querySelector(".top-right");
 
 async function fetchGoogleMapsApiKey() {
   try {
-    const response = await fetch("https://googlemapsweatherapp.netlify.app/.netlify/functions/grabapikey/grabapikey/get-maps-api-key");
+    const response = await fetch("https://googlemapsweatherapp.netlify.app/netlify/functions/grabapikey/grabapikey/get-maps-api-key");
     const data = await response.json();
     apiKey = data.apiKey;
     weatherKey = data.weatherKey;
+    console.log(data)
 
     const googleMapsScript = document.createElement("script");
     googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMap`;
