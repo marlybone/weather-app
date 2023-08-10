@@ -55,7 +55,7 @@ const background = document.querySelector(".top-right");
 
 async function fetchGoogleMapsApiKey() {
   try {
-    const response = await fetch("http://localhost:5500/get-maps-api-key");
+    const response = await fetch("/.netlify/functions/netlifyhost");
     const data = await response.json();
     apiKey = data.apiKey;
     weatherKey = data.weatherKey;

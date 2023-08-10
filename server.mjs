@@ -21,7 +21,7 @@ app.get('/get-maps-api-key', async (req, res) => {
     }  
   });
 
-
+  exports.handler = app;
   
 app.listen(port, () => {
     console.log(`Server is running on https://localhost:${port}`)
